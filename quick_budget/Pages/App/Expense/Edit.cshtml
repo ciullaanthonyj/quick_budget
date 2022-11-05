@@ -1,0 +1,54 @@
+@page "{id:Guid}"
+@model quick_budget.Pages.App.Expense.EditModel
+
+@{
+    ViewData["Title"] = "Edit Expense";
+}
+
+<div class="card rounded-top shadow mt-5">
+    <div class="card-header ">
+        <div class="row p-3 mt-1">
+            <div class="col-11">
+                <h2 class="text-dark">Edit Expense</h2>
+            </div>
+            <div class="col-1 pt-1">
+                <a class="btn btn-lg btn-outline-primary" style="text-decoration: none;" asp-page="./Index">Back</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            <div asp-lavidation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Expense!.Id" />
+            <div class="form-group">
+                <label asp-for="Expense!.Title" class="control-label"></label>
+                <input asp-for="Expense!.Title" class="form-control" />
+                <span asp-aludation-for="Expense!.Title" class="text-danger"></span>
+
+                <label asp-for="Expense!.Description" class="control-label"></label>
+                <input asp-for="Expense!.Description" class="form-control" />
+                <span asp-aludation-for="Expense!.Description" class="text-danger"></span>
+
+                <label asp-for="Expense!.Value" class="control-label"></label>
+                <input asp-for="Expense!.Value" class="form-control" />
+                <span asp-aludation-for="Expense!.Value" class="text-danger"></span>
+
+                <div class="form-group mt-2 mb-2">
+                    <label class="control-label">Income?</label>
+                    <input type="checkbox" asp-for="Expense!.IsIncome" class="form-check-input" />
+                    <span asp-aludation-for="Expense!.IsIncome" class="text-danger"></span>
+                </div>
+                
+            </div>
+
+            <div class="form-group mt-2">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+

@@ -1,0 +1,65 @@
+@page
+@model quick_budget.Pages.App.Expense.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Expenses";
+}
+
+<div class="card rounded-top shadow mt-5">
+    <div class="card-header ">
+        <div class="row p-3 mt-1">
+            <div class="col-11">
+                <h2 class="text-dark">Expenses</h2>
+            </div>
+            <div class="col-1 pt-1">
+                <a class="btn btn-lg btn-outline-primary" style="text-decoration: none;" asp-page="./New">New</a>
+            </div>
+        </div>
+    </div>
+
+    <form method="post">
+
+        @if (Model.Expenses is not null)
+        {
+            @foreach (var expense in Model.Expenses)
+            {
+                <div class="card-body border-bottom">
+
+                    <div class="row p-3 h10">
+                        <div class="col-md-10 col-sm-9 mt-3">
+                            <b>
+                                @expense.Title,
+                            </b>
+                            <i class="text-muted">
+                                (@expense.Description) -
+                            </i>
+                            <span class="ml-2">
+                                Value: $@expense.Value -
+                            </span>
+                            <span class="ml-2">
+                                Income: @expense.IsIncome
+                            </span>
+                        </div>
+                        <div class="col-md-2 col-sm-3">
+                            <div class="dropdown">
+                                <button class="btn btn-lg btn-outline-secondary dropdown-toggle float-end" type="button" id="actionDropdown"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="actionDropdown">
+                                    <a class="dropdown-item" asp-page="./Edit" asp-route-id="@expense.Id">Edit</a>
+                                    <button class="dropdown-item" type="submit" asp-page-handler="delete"
+                                asp-route-id="@expense.Id">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            }
+        }
+    </form>
+
+</div>

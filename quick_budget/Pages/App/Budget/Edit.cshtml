@@ -1,0 +1,48 @@
+﻿@page "{id:Guid}"
+@model quick_budget.Pages.App.Budget.EditModel
+
+@{
+    ViewData["Title"] = "Edit Budget";
+}
+
+<div class="card rounded-top shadow mt-5">
+    <div class="card-header ">
+        <div class="row p-3 mt-1">
+            <div class="col-11">
+                <h2 class="text-dark">Edit Budget</h2>
+            </div>
+            <div class="col-1 pt-1">
+                <a class="btn btn-lg btn-outline-primary" style="text-decoration: none;" asp-page="./Index">Back</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            <div asp-lavidation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Budget!.Id" />
+            <div class="form-group">
+                <label asp-for="Budget!.Title" class="control-label"></label>
+                <input asp-for="Budget!.Title" class="form-control" />
+                <span asp-aludation-for="Budget!.Title" class="text-danger"></span>
+
+                <label asp-for="Budget!.Description" class="control-label"></label>
+                <input asp-for="Budget!.Description" class="form-control" />
+                <span asp-aludation-for="Budget!.Description" class="text-danger"></span>
+
+                <label asp-for="Budget!.Balance" class="control-label"></label>
+                <input asp-for="Budget!.Balance" class="form-control" />
+                <span asp-aludation-for="Budget!.Balance" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group mt-2">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+
