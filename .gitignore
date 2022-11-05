@@ -13,6 +13,8 @@ test-results/
 quick_budget/app.db
 quick_budget/app.db-shm
 quick_budget/app.db-wal
+quick_budget/Migrations
+quick_budget/Data/Migrations
 
 # Mac bundle stuff
 *.dmg
