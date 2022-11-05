@@ -10,6 +10,8 @@ autom4te.cache/
 *.tar.gz
 tarballs/
 test-results/
+.vscode
+.vs
 quick_budget/app.db
 quick_budget/app.db-shm
 quick_budget/app.db-wal
