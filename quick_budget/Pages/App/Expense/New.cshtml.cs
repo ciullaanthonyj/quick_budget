@@ -10,6 +10,7 @@ using System.Security.Claims;
 
 namespace quick_budget.Pages.App.Expense
 {
+    [Authorize]
     public class NewModel : PageModel
     {
 

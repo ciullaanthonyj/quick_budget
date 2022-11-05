@@ -11,6 +11,7 @@ using System.Security.Claims;
 
 namespace quick_budget.Pages.App.Budget
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly quick_budget.Data.BudgetContext _context;
