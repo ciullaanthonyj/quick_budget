@@ -46,6 +46,7 @@
             {
                 @foreach (var budget in Model.Budgets)
                 {
+
                     <div class="card-body border-bottom">
 
                         <div class="row p-3 h10">
@@ -60,6 +61,8 @@
                                 </h3>
                             </div>
                             <div class="col-md-2 col-sm-3 col-3">
+
+
                                 <a class="btn btn-outline-primary btn-lg" asp-page="./Budget/Edit"
                             asp-route-id="@budget.Id">Edit</a>
                             </div>

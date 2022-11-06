@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace quick_budget.Models
 {
     /// <summary>
     /// Budgets Class
     /// </summary>
+    [Index(nameof(Owner), nameof(Id))]
     public class Budgets
     {
         #region Constructors

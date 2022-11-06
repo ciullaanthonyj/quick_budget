@@ -1,9 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using quick_budget.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using Microsoft.Extensions.Configuration;
 
 namespace quick_budget.Pages.App
 {
@@ -22,7 +26,7 @@ namespace quick_budget.Pages.App
         public PaginatedList<Budgets> Budgets { get; set; }
         public PaginatedList<Expenses> Expenses { get; set; }
 
-        public async Task OnGetAsync(int? expenseIndex, int? budgetIndex)
+        public async Task<IActionResult> OnGetAsync(int? expenseIndex, int? budgetIndex)
         {
             string userId = (string)User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -44,12 +48,14 @@ namespace quick_budget.Pages.App
             
             var pageSize = Configuration.GetValue("PageSize", 5);
 
-
             Budgets = await PaginatedList<Budgets>.CreateAsync(
                 budgetIQ.AsNoTracking(), budgetIndex ?? 1, pageSize);
 
             Expenses = await PaginatedList<Expenses>.CreateAsync(
-                expenseIQ.AsNoTracking(), expenseIndex ?? 1, pageSize);    
+                expenseIQ.AsNoTracking(), expenseIndex ?? 1, pageSize); 
+
+
+            return Page();       
         }
     }
 }
