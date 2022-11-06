@@ -4,7 +4,7 @@ namespace quick_budget.Models
 {
     public class Budgets
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
         public string Title { get; set; }
@@ -16,9 +16,9 @@ namespace quick_budget.Models
 
         public double Balance { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        public DateTime UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; } = DateTime.Now;
     }
 }
 

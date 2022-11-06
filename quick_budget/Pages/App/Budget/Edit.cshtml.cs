@@ -28,7 +28,7 @@ namespace quick_budget.Pages.App.Budget
         {
             if(id is null)
             {
-                return NotFound();
+                return RedirectToPage("./Index");
             }
 
             string userId = (string)User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -37,7 +37,7 @@ namespace quick_budget.Pages.App.Budget
 
             if(Budget is null)
             {
-                return NotFound();
+                return RedirectToPage("./Index");
             }
             return Page();
         }
@@ -53,12 +53,11 @@ namespace quick_budget.Pages.App.Budget
             {
                 try
                 {
-                    _context.Entry(Budget).Property("UpdatedAt").IsModified = true;
-                    _context.Entry(Budget).Property("Title").IsModified = true;
-                    _context.Entry(Budget).Property("Description").IsModified = true;
-                    _context.Entry(Budget).Property("Balance").IsModified = true;
-
-                    Budget.UpdatedAt = DateTime.Now;
+                    _context.Entry(Budget).State = EntityState.Modified;
+                    
+                    _context.Entry(Budget).Property(b => b.Id).IsModified = false;
+                    _context.Entry(Budget).Property(b => b.CreatedAt).IsModified = false;
+                    _context.Entry(Budget).Property(b => b.Owner).IsModified = false;
 
                     await _context.SaveChangesAsync();
                 }
@@ -66,7 +65,7 @@ namespace quick_budget.Pages.App.Budget
                 {
                     if(!BudgetExists(Budget.Id))
                     {
-                        return NotFound();
+                        return RedirectToPage("./Index");
                     }
                     else
                     {

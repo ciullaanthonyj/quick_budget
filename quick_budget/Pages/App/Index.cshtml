@@ -1,0 +1,129 @@
+@page
+@model quick_budget.Pages.App.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="card mt-5 rounded shadow">
+    <div class="card-header p-4">
+        <h1>Welcome back, @User.Identity?.Name!</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <div class="card rounded-top shadow mt-5">
+            <div class="card-header ">
+                <div class="row p-3 mt-1">
+                    <div class="col-10">
+                        <h2 class="text-dark">Budgets</h2>
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-3">
+                        <div class="dropdown">
+                            <button class="btn btn-lg btn-outline-secondary dropdown-toggle float-end" type="button"
+                                id="actionDropdown" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                Actions
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="actionDropdown">
+                                <a class="dropdown-item" asp-page="./Budget/Index">Manage Budgets</a>
+                                <a class="dropdown-item" asp-page="./Budget/New">New Budget</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (Model.Budgets is not null)
+            {
+                @foreach (var budget in Model.Budgets)
+                {
+                    <div class="card-body border-bottom">
+
+                        <div class="row p-3 h10">
+                            <div class="col-md-10 col-sm-9 col-9 mt-3">
+                                <h3>
+                                    <b>
+                                        @budget.Title,
+                                    </b>
+                                    <i class="text-muted">
+                                        (@budget.Description) -
+                                    </i>
+                                    <span class="ml-2">
+                                        Balance: $@budget.Balance
+                                    </span>
+                                </h3>
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-3">
+                                <a class="btn btn-outline-primary btn-lg" asp-page="./Budget/Edit" asp-route-id="@budget.Id">Edit</a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+            }
+
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="card rounded-top shadow mt-5 mb-5">
+            <div class="card-header ">
+                <div class="row p-3 mt-1">
+                    <div class="col-10">
+                        <h2 class="text-dark">Expenses</h2>
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-3">
+                        <div class="dropdown">
+                            <button class="btn btn-lg btn-outline-secondary dropdown-toggle float-end" type="button"
+                                id="actionDropdown" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                Actions
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="actionDropdown">
+                                <a class="dropdown-item" asp-page="./Expense/Index">Manage Expenses</a>
+                                <a class="dropdown-item" asp-page="./Expense/New">New Expense</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @if (Model.Expenses is not null)
+            {
+                @foreach (var expense in Model.Expenses)
+                {
+                    <div class="card-body border border-2 @(expense.IsIncome ? "border-danger" : "border-success") ">
+
+                        <div class="row p-3 h10">
+                            <div class="col-md-10 col-sm-8 mt-3 col-9">
+                                <h3>
+                                    <b>
+                                        @expense.Title,
+                                    </b>
+                                    <i class="text-muted">
+                                        (@expense.Description) -
+                                    </i>
+                                    <span class="ml-2">
+                                        Value: $@expense.Value
+                                    </span>
+                                </h3>
+                            </div>
+                            <div class="col-md-2 col-sm-4 col-3">
+                                <a class="btn btn-outline-primary btn-lg" asp-page="./Expense/Edit" asp-route-id="@expense.Id">Edit</a>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+            }
+
+        </div>
+    </div>
+</div>

@@ -35,11 +35,7 @@ namespace quick_budget.Pages.App.Budget
             
             if(ModelState.IsValid)
                 {
-                    Budget.Id = Guid.NewGuid();
                     Budget.Owner = userId;
-                    Budget.CreatedAt = DateTime.Now;
-                    Budget.UpdatedAt = DateTime.Now;
-
                     _context.Add(Budget);
 
                     await _context.SaveChangesAsync();

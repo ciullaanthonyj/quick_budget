@@ -24,22 +24,21 @@
         {
             @foreach (var expense in Model.Expenses)
             {
-                <div class="card-body border-bottom">
+                <div class="card-body border border-2 @(expense.IsIncome ? "border-danger" : "border-success") ">
 
                     <div class="row p-3 h10">
                         <div class="col-md-10 col-sm-9 mt-3">
-                            <b>
-                                @expense.Title,
-                            </b>
-                            <i class="text-muted">
-                                (@expense.Description) -
-                            </i>
-                            <span class="ml-2">
-                                Value: $@expense.Value -
-                            </span>
-                            <span class="ml-2">
-                                Income: @expense.IsIncome
-                            </span>
+                            <h3>
+                                <b>
+                                    @expense.Title,
+                                </b>
+                                <i class="text-muted">
+                                    (@expense.Description) -
+                                </i>
+                                <span class="ml-2">
+                                    Value: $@expense.Value
+                                </span>
+                            </h3>
                         </div>
                         <div class="col-md-2 col-sm-3">
                             <div class="dropdown">

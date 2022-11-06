@@ -53,13 +53,11 @@ namespace quick_budget.Pages.App.Expense
             {
                 try
                 {
-                    _context.Entry(Expense).Property("UpdatedAt").IsModified = true;
-                    _context.Entry(Expense).Property("Title").IsModified = true;
-                    _context.Entry(Expense).Property("Description").IsModified = true;
-                    _context.Entry(Expense).Property("Value").IsModified = true;
-                    _context.Entry(Expense).Property("IsIncome").IsModified = true;
+                    _context.Entry(Expense).State = EntityState.Modified;
 
-                    Expense.UpdatedAt = DateTime.Now;
+                    _context.Entry(Expense).Property(e => e.Id).IsModified = false;
+                    _context.Entry(Expense).Property(e => e.Owner).IsModified = false;
+                    _context.Entry(Expense).Property(e => e.CreatedAt).IsModified = false;
 
                     await _context.SaveChangesAsync();
                 }

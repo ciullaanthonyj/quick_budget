@@ -35,10 +35,7 @@ namespace quick_budget.Pages.App.Expense
             
             if(ModelState.IsValid)
                 {
-                    Expense.Id = Guid.NewGuid();
                     Expense.Owner = userId;
-                    Expense.CreatedAt = DateTime.Now;
-                    Expense.UpdatedAt = DateTime.Now;
 
                     _context.Add(Expense);
 
