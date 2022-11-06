@@ -15,31 +15,48 @@ namespace quick_budget.Pages.App.Budget
     public class IndexModel : PageModel
     {
         private readonly Data.BudgetContext _context;
+        public IList<Budgets> Budgets { get; set; }
 
         public IndexModel(Data.BudgetContext context)
         {
             _context = context;
         }
 
-        public IList<Budgets> Budgets { get; set; }
-
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            string userId = (string)User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Budgets = await _context.Budgets.Where(b => b.Owner.Equals(userId)).ToListAsync();
+            IQueryable<Budgets> budgetIQ = from b in _context.Budgets select b;
+        
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            budgetIQ = budgetIQ.Where(b => b.Owner.Equals(userId));
+
+            Budgets = await budgetIQ.AsNoTracking().ToListAsync();
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(Guid id)
         {
-            var budget = await _context.Budgets.FindAsync(id);
+            IQueryable<Budgets> budgetIQ = from b in _context.Budgets select b;
+
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            budgetIQ = budgetIQ.Where(b => b.Owner.Equals(userId));
+            budgetIQ = budgetIQ.Where(b => b.Id.Equals(id));
+
+            var budget = await budgetIQ.AsNoTracking().FirstOrDefaultAsync();
 
             if(budget is not null)
             {
                 _context.Budgets.Remove(budget);
                 await _context.SaveChangesAsync();
+
+                return RedirectToPage();
             }
 
-            return RedirectToPage();
+            else{
+                return Page();
+            }
         }
     }
 }

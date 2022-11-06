@@ -31,14 +31,22 @@ namespace quick_budget.Pages.App.Budget
                 return RedirectToPage("./Index");
             }
 
+            IQueryable<Budgets> budgetIQ = from b in _context.Budgets select b;
+
             string userId = (string)User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            Budget = await _context.Budgets.Where(b => b.Owner == userId).FirstOrDefaultAsync(b => b.Id.Equals(id));
+            budgetIQ = budgetIQ.Where(b => b.Owner.Equals(userId));
+            budgetIQ = budgetIQ.Where(b => b.Id.Equals(id));
+
+            Budget = await budgetIQ.AsNoTracking().FirstOrDefaultAsync();
+
+            //Budget = await _context.Budgets.Where(b => b.Owner == userId).FirstOrDefaultAsync(b => b.Id.Equals(id));
 
             if(Budget is null)
             {
-                return RedirectToPage("./Index");
+                return NotFound();
             }
+            
             return Page();
         }
 

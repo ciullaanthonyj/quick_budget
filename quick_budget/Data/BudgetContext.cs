@@ -14,8 +14,10 @@ namespace quick_budget.Data
 
         }
 
+        #region DbSets
         public DbSet<quick_budget.Models.Budgets> Budgets { get; set; }
         public DbSet<quick_budget.Models.Expenses> Expenses { get; set; }
+        #endregion //DbSets
     }
 }
 

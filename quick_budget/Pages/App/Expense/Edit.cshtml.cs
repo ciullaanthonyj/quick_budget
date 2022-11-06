@@ -9,11 +9,13 @@ using quick_budget.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
+
 namespace quick_budget.Pages.App.Expense
 {
     [Authorize]
     public class EditModel : PageModel
     {
+        
         private readonly quick_budget.Data.BudgetContext _context;
 
         public EditModel(quick_budget.Data.BudgetContext context)
@@ -31,14 +33,24 @@ namespace quick_budget.Pages.App.Expense
                 return NotFound();
             }
 
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            IQueryable<Expenses> expenseIQ = from e in _context.Expenses select e;
 
-            Expense = await _context.Expenses.Where(b => b.Owner == userId).FirstOrDefaultAsync(b => b.Id.Equals(id));
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            
+
+            expenseIQ = expenseIQ.Where(e => e.Owner.Equals(userId));
+            expenseIQ = expenseIQ.Where(b => b.Id.Equals(id));
+
+
+            Expense = await expenseIQ.AsNoTracking().FirstOrDefaultAsync();
+
+               
 
             if(Expense is null)
             {
                 return NotFound();
             }
+            
             return Page();
         }
 

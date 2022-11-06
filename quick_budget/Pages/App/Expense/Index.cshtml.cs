@@ -15,31 +15,48 @@ namespace quick_budget.Pages.App.Expense
     public class IndexModel : PageModel
     {
         private readonly Data.BudgetContext _context;
+        public IList<Expenses> Expenses { get; set; }
 
         public IndexModel(Data.BudgetContext context)
         {
             _context = context;
         }
-
-        public IList<Expenses> Expenses { get; set; }
-
-        public async Task OnGetAsync()
+        
+        public async Task<IActionResult> OnGetAsync()
         {
-            string userId = (string)User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Expenses = await _context.Expenses.Where(b => b.Owner == userId).ToListAsync();
+            IQueryable<Expenses> expenseIQ = from e in _context.Expenses select e;
+
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            expenseIQ = expenseIQ.Where(e => e.Owner.Equals(userId));
+
+            Expenses = await expenseIQ.AsNoTracking().ToListAsync();
+
+            return Page();
         }
+
 
         public async Task<IActionResult> OnPostDeleteAsync(Guid id)
         {
-            var expense = await _context.Expenses.FindAsync(id);
+            IQueryable<Expenses> expenseIQ = from e in _context.Expenses select e;
+
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            expenseIQ = expenseIQ.Where(e => e.Owner.Equals(userId));
+            expenseIQ = expenseIQ.Where(e => e.Id.Equals(id));
+
+            var expense = await expenseIQ.AsNoTracking().FirstOrDefaultAsync(e => e.Id.Equals(id));
 
             if(expense is not null)
             {
                 _context.Expenses.Remove(expense);
                 await _context.SaveChangesAsync();
-            }
 
-            return RedirectToPage();
+                return RedirectToPage();
+            }
+            else{
+                return Page();
+            }
         }
     }
 }
