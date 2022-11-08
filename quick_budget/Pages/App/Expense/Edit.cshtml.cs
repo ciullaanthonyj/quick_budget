@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -33,16 +29,16 @@ namespace quick_budget.Pages.App.Expense
                 return NotFound();
             }
 
-            IQueryable<Expenses> expenseIQ = from e in _context.Expenses select e;
+            IQueryable<Expenses> eiq = from e in _context.Expenses select e;
 
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             
 
-            expenseIQ = expenseIQ.Where(e => e.Owner.Equals(userId));
-            expenseIQ = expenseIQ.Where(b => b.Id.Equals(id));
+            eiq = eiq.Where(e => e.Owner.Equals(userId));
+            eiq = eiq.Where(b => b.Id.Equals(id));
 
 
-            Expense = await expenseIQ.AsNoTracking().FirstOrDefaultAsync();
+            Expense = await eiq.AsNoTracking().FirstOrDefaultAsync();
 
                
 

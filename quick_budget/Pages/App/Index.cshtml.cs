@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -15,12 +11,12 @@ namespace quick_budget.Pages.App
     public class IndexModel : PageModel
     {
         private readonly Data.BudgetContext _context;
-        private readonly IConfiguration Configuration;
+        private readonly IConfiguration _configuration;
 
         public IndexModel(Data.BudgetContext context, IConfiguration configuration)
         {
             _context = context;
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
         public PaginatedList<Budgets> Budgets { get; set; }
@@ -40,19 +36,19 @@ namespace quick_budget.Pages.App
                 budgetIndex = 1;
             }
 
-            IQueryable<Budgets> budgetIQ = from b in _context.Budgets select b;
-            IQueryable<Expenses> expenseIQ = from e in _context.Expenses select e;
+            IQueryable<Budgets> biq = from b in _context.Budgets select b;
+            IQueryable<Expenses> eiq = from e in _context.Expenses select e;
 
-            budgetIQ = budgetIQ.Where(b => b.Owner.Equals(userId));
-            expenseIQ = expenseIQ.Where(e => e.Owner.Equals(userId));
+            biq = biq.Where(b => b.Owner.Equals(userId));
+            eiq = eiq.Where(e => e.Owner.Equals(userId));
             
-            var pageSize = Configuration.GetValue("PageSize", 5);
+            var pageSize = _configuration.GetValue("PageSize", 5);
 
             Budgets = await PaginatedList<Budgets>.CreateAsync(
-                budgetIQ.AsNoTracking(), budgetIndex ?? 1, pageSize);
+                biq.AsNoTracking(), budgetIndex ?? 1, pageSize);
 
             Expenses = await PaginatedList<Expenses>.CreateAsync(
-                expenseIQ.AsNoTracking(), expenseIndex ?? 1, pageSize); 
+                eiq.AsNoTracking(), expenseIndex ?? 1, pageSize); 
 
 
             return Page();       

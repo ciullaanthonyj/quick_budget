@@ -29,14 +29,20 @@
                     </div>
                     <div class="col-md-2 col-sm-3 col-3">
                         <div class="dropdown">
-                            <button class="btn btn-lg btn-outline-secondary dropdown-toggle float-end" type="button"
-                                id="actionDropdown" data-bs-toggle="dropdown" aria-haspopup="true"
+                            <button class="
+                                btn btn-lg btn-outline-secondary 
+                                dropdown-toggle float-end
+                            " type="button" id="actionDropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 Actions
                             </button>
                             <div class="dropdown-menu" aria-labelledby="actionDropdown">
-                                <a class="dropdown-item" asp-page="./Budget/Index">Manage Budgets</a>
-                                <a class="dropdown-item" asp-page="./Budget/New">New Budget</a>
+                                <a class="dropdown-item" asp-page="./Budget/Index">
+                                    Manage Budgets
+                                </a>
+                                <a class="dropdown-item" asp-page="./Budget/New">
+                                    New Budget
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -63,8 +69,9 @@
                             <div class="col-md-2 col-sm-3 col-3">
 
 
-                                <a class="btn btn-outline-primary btn-lg" asp-page="./Budget/Edit"
-                            asp-route-id="@budget.Id">Edit</a>
+                                <a class="btn btn-outline-primary btn-lg" asp-page="./Budget/Edit" asp-route-id="@budget.Id">
+                                    Edit
+                                </a>
                             </div>
                         </div>
 
@@ -78,18 +85,25 @@
                     <nav aria-label="Budget Pagination">
                         <ul class="pagination justify-content-center">
                             <li class="page-item @prevBDisabled ">
-                                <a asp-page="./Index" asp-route-expenseIndex="@(Model.Budgets.PageIndex - 1)"
-                                class="page-link">Previous</a>
+                                <a asp-page="./Index" asp-route-expenseIndex="
+                                    @(Model.Budgets.PageIndex - 1)
+                                    " class="page-link">
+                                    Previous
+                                </a>
                             </li>
                             @for (int i = 1; i <= @Model.Budgets.TotalPages; i++)
                             {
                                 <li class="page-item">
-                                    <a asp-page="./Index" asp-route-expenseIndex="@i" class="page-link">@i</a>
+                                    <a asp-page="./Index" asp-route-expenseIndex="@i" class="page-link">
+                                        @i
+                                    </a>
                                 </li>
                             }
                             <li class="page-item @nextBDisabled">
-                                <a asp-page="./Index" asp-route-expenseIndex="@(Model.Budgets.PageIndex + 1)"
-                                class="page-link">Next</a>
+                                <a asp-page="./Index" asp-route-expenseIndex="
+                                    @(Model.Budgets.PageIndex + 1)" class="page-link">
+                                    Next
+                                </a>
                             </li>
                         </ul>
                     </nav>
@@ -108,7 +122,8 @@
                     </div>
                     <div class="col-md-2 col-sm-3 col-3">
                         <div class="dropdown">
-                            <button class="btn btn-lg btn-outline-secondary dropdown-toggle float-end" type="button"
+                            <button class="
+                                btn btn-lgπ btn-outline-secondary dropdown-toggle float-end" type="button"
                                 id="actionDropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 Actions

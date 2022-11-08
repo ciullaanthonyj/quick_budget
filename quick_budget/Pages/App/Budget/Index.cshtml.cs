@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using quick_budget.Models;
@@ -24,27 +20,27 @@ namespace quick_budget.Pages.App.Budget
 
         public async Task<IActionResult> OnGetAsync()
         {
-            IQueryable<Budgets> budgetIQ = from b in _context.Budgets select b;
+            IQueryable<Budgets> biq = from b in _context.Budgets select b;
         
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            budgetIQ = budgetIQ.Where(b => b.Owner.Equals(userId));
+            biq = biq.Where(b => b.Owner.Equals(userId));
 
-            Budgets = await budgetIQ.AsNoTracking().ToListAsync();
+            Budgets = await biq.AsNoTracking().ToListAsync();
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(Guid id)
         {
-            IQueryable<Budgets> budgetIQ = from b in _context.Budgets select b;
+            IQueryable<Budgets> biq = from b in _context.Budgets select b;
 
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            budgetIQ = budgetIQ.Where(b => b.Owner.Equals(userId));
-            budgetIQ = budgetIQ.Where(b => b.Id.Equals(id));
+            biq = biq.Where(b => b.Owner.Equals(userId));
+            biq = biq.Where(b => b.Id.Equals(id));
 
-            var budget = await budgetIQ.AsNoTracking().FirstOrDefaultAsync();
+            var budget = await biq.AsNoTracking().FirstOrDefaultAsync();
 
             if(budget is not null)
             {

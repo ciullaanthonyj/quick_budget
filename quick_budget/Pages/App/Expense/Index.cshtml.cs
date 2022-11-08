@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -24,13 +20,13 @@ namespace quick_budget.Pages.App.Expense
         
         public async Task<IActionResult> OnGetAsync()
         {
-            IQueryable<Expenses> expenseIQ = from e in _context.Expenses select e;
+            IQueryable<Expenses> eiq = from e in _context.Expenses select e;
 
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            expenseIQ = expenseIQ.Where(e => e.Owner.Equals(userId));
+            eiq = eiq.Where(e => e.Owner.Equals(userId));
 
-            Expenses = await expenseIQ.AsNoTracking().ToListAsync();
+            Expenses = await eiq.AsNoTracking().ToListAsync();
 
             return Page();
         }
@@ -38,14 +34,14 @@ namespace quick_budget.Pages.App.Expense
 
         public async Task<IActionResult> OnPostDeleteAsync(Guid id)
         {
-            IQueryable<Expenses> expenseIQ = from e in _context.Expenses select e;
+            IQueryable<Expenses> eiq = from e in _context.Expenses select e;
 
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            expenseIQ = expenseIQ.Where(e => e.Owner.Equals(userId));
-            expenseIQ = expenseIQ.Where(e => e.Id.Equals(id));
+            eiq = eiq.Where(e => e.Owner.Equals(userId));
+            eiq = eiq.Where(e => e.Id.Equals(id));
 
-            var expense = await expenseIQ.AsNoTracking().FirstOrDefaultAsync(e => e.Id.Equals(id));
+            var expense = await eiq.AsNoTracking().FirstOrDefaultAsync(e => e.Id.Equals(id));
 
             if(expense is not null)
             {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using quick_budget.Models;
@@ -31,14 +27,14 @@ namespace quick_budget.Pages.App.Budget
                 return RedirectToPage("./Index");
             }
 
-            IQueryable<Budgets> budgetIQ = from b in _context.Budgets select b;
+            IQueryable<Budgets> biq = from b in _context.Budgets select b;
 
             string userId = (string)User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            budgetIQ = budgetIQ.Where(b => b.Owner.Equals(userId));
-            budgetIQ = budgetIQ.Where(b => b.Id.Equals(id));
+            biq = biq.Where(b => b.Owner.Equals(userId));
+            biq = biq.Where(b => b.Id.Equals(id));
 
-            Budget = await budgetIQ.AsNoTracking().FirstOrDefaultAsync();
+            Budget = await biq.AsNoTracking().FirstOrDefaultAsync();
 
             //Budget = await _context.Budgets.Where(b => b.Owner == userId).FirstOrDefaultAsync(b => b.Id.Equals(id));
 
